@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SplashPage } from '@/pages/SplashPage';
 import { WelcomePage } from '@/pages/WelcomePage';
 import { LoginPage } from '@/pages/LoginPage';
@@ -28,6 +28,22 @@ export default function App() {
       typeof window !== 'undefined' &&
       (window.location.pathname.includes('download') || window.location.hash.includes('download'))
   );
+
+  useEffect(() => {
+    const handleUrlChange = () => {
+      setIsDownloadView(
+        window.location.pathname.includes('download') ||
+        window.location.hash.includes('download')
+      );
+    };
+
+    window.addEventListener('popstate', handleUrlChange);
+    window.addEventListener('hashchange', handleUrlChange);
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+      window.removeEventListener('hashchange', handleUrlChange);
+    };
+  }, []);
 
   // Navigation states
   const [authPage, setAuthPage] = useState<AuthPage>('splash');

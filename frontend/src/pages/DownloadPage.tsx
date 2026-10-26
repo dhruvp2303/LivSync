@@ -91,7 +91,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onOpenWebApp }) => {
             <div className="md:col-span-7 space-y-5 text-center md:text-left">
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold">
-                  <ShieldCheck className="h-4 w-4" /> Verified Native APK (12.2 MB)
+                  <ShieldCheck className="h-4 w-4" /> Verified Native APK (Build v1.0)
                 </div>
                 <h2 className="text-2xl font-black text-slate-900 tracking-tight">
                   Choose How to Run LivSync
@@ -112,7 +112,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onOpenWebApp }) => {
                   <div className="flex flex-col items-start leading-tight">
                     <span>{downloadStarted ? 'Downloading...' : 'Download APK'}</span>
                     <span className="text-[11px] text-indigo-100 font-normal">
-                      Direct APK (12.2 MB)
+                      Direct APK File (Official)
                     </span>
                   </div>
                 </button>
