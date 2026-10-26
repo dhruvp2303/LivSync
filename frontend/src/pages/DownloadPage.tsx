@@ -213,10 +213,10 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onOpenWebApp }) => {
 
                 <div className="space-y-1.5 w-full">
                   <div className="text-xs font-bold text-slate-800 flex items-center justify-center gap-1.5">
-                    <Smartphone className="h-3.5 w-3.5 text-indigo-600" /> Real Scannable QR
+                    <Smartphone className="h-3.5 w-3.5 text-indigo-600" /> Scan with Your Phone
                   </div>
                   <p className="text-[10px] text-slate-500 leading-tight">
-                    Point your camera at this code to open the download page instantly
+                    Point your phone camera at this code to download directly on mobile
                   </p>
 
                   {/* Copy Link Button */}
