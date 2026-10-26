@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // 1. Private User Account Records
+    // Never expose private email/phone to discovery
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // 2. Public Roommate Profiles
+    // Visible to authenticated users only if is_visible is true or if viewing own profile
+    match /roommateProfiles/{userId} {
+      allow read: if isAuthenticated() && (resource.data.is_visible == true || isOwner(userId));
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if isOwner(userId);
+    }
+
+    // 3. Living Preferences
+    // Readable by authenticated users for deterministic compatibility calculation
+    // Writable ONLY by document owner
+    match /preferences/{userId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isOwner(userId);
+    }
+
+    // 4. Saved Profiles (Private Bookmarks)
+    // Completely private to owner
+    match /savedProfiles/{userId}/items/{candidateId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // 5. Roommate Connection Requests
+    // Visible ONLY to sender and recipient
+    // Only recipient can update status (accept/reject)
+    match /roommateRequests/{requestId} {
+      allow read: if isAuthenticated() && (
+        resource.data.senderId == request.auth.uid ||
+        resource.data.recipientId == request.auth.uid
+      );
+      
+      allow create: if isAuthenticated() &&
+        request.resource.data.senderId == request.auth.uid &&
+        request.resource.data.recipientId != request.auth.uid &&
+        request.resource.data.status == 'pending';
+
+      allow update: if isAuthenticated() &&
+        resource.data.recipientId == request.auth.uid &&
+        (request.resource.data.status == 'accepted' || request.resource.data.status == 'rejected') &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updated_at']);
+
+      allow delete: if isAuthenticated() && (
+        resource.data.senderId == request.auth.uid ||
+        resource.data.recipientId == request.auth.uid
+      );
+    }
+  }
+}
