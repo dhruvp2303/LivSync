@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import QRCode from 'qrcode';
 import {
   Download,
   Globe,
@@ -8,7 +9,8 @@ import {
   CheckCircle2,
   Lock,
   Users,
-  Check
+  Check,
+  Copy
 } from 'lucide-react';
 
 interface DownloadPageProps {
@@ -17,6 +19,46 @@ interface DownloadPageProps {
 
 export const DownloadPage: React.FC<DownloadPageProps> = ({ onOpenWebApp }) => {
   const [downloadStarted, setDownloadStarted] = useState(false);
+  const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>('');
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  // Target download URL to encode in the QR code
+  const isLocalhost =
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname.startsWith('192.168.'));
+
+  const liveShareableUrl = isLocalhost
+    ? 'https://livsync.vercel.app/#download'
+    : `${window.location.origin}/#download`;
+
+  useEffect(() => {
+    // Generate real, high-resolution scannable QR code
+    QRCode.toDataURL(liveShareableUrl, {
+      width: 320,
+      margin: 1,
+      errorCorrectionLevel: 'H',
+      color: {
+        dark: '#0F172A',
+        light: '#FFFFFF',
+      },
+    })
+      .then((url) => {
+        setQrCodeDataUrl(url);
+      })
+      .catch((err) => {
+        console.error('Error generating QR code:', err);
+      });
+  }, [liveShareableUrl]);
+
+  const handleCopyLink = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(liveShareableUrl);
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2500);
+    }
+  };
 
   const handleDownload = () => {
     setDownloadStarted(true);
@@ -153,55 +195,48 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onOpenWebApp }) => {
               <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col items-center text-center space-y-3 w-full max-w-[240px]">
                 {/* QR Code Container */}
                 <div className="p-3 bg-white rounded-xl shadow-xs border border-slate-200/80 relative flex items-center justify-center">
-                  <div className="w-36 h-36 flex items-center justify-center bg-white rounded-lg p-1 relative">
-                    <svg viewBox="0 0 120 120" className="w-full h-full text-slate-900" fill="currentColor">
-                      <rect x="0" y="0" width="35" height="35" rx="6" fill="#0F172A" />
-                      <rect x="5" y="5" width="25" height="25" rx="3" fill="white" />
-                      <rect x="10" y="10" width="15" height="15" rx="2" fill="#4F46E5" />
-                      
-                      <rect x="85" y="0" width="35" height="35" rx="6" fill="#0F172A" />
-                      <rect x="90" y="5" width="25" height="25" rx="3" fill="white" />
-                      <rect x="95" y="10" width="15" height="15" rx="2" fill="#4F46E5" />
-                      
-                      <rect x="0" y="85" width="35" height="35" rx="6" fill="#0F172A" />
-                      <rect x="5" y="90" width="25" height="25" rx="3" fill="white" />
-                      <rect x="10" y="95" width="15" height="15" rx="2" fill="#4F46E5" />
-
-                      <rect x="45" y="5" width="8" height="8" rx="1.5" fill="#0F172A" />
-                      <rect x="60" y="5" width="15" height="8" rx="1.5" fill="#0F172A" />
-                      <rect x="45" y="20" width="20" height="8" rx="1.5" fill="#4F46E5" />
-                      <rect x="70" y="20" width="8" height="8" rx="1.5" fill="#0F172A" />
-                      <rect x="45" y="35" width="8" height="12" rx="1.5" fill="#0F172A" />
-
-                      <rect x="10" y="45" width="25" height="8" rx="1.5" fill="#0F172A" />
-                      <rect x="5" y="60" width="10" height="8" rx="1.5" fill="#4F46E5" />
-                      <rect x="22" y="60" width="18" height="8" rx="1.5" fill="#0F172A" />
-
-                      <circle cx="60" cy="60" r="16" fill="#4F46E5" />
-                      <circle cx="60" cy="60" r="13" fill="#FFFFFF" />
-                      <path d="M55 58 A 5 5 0 0 1 65 58 V 65 H 55 Z" fill="#4F46E5" />
-                      <circle cx="60" cy="54" r="2.5" fill="#0F172A" />
-
-                      <rect x="80" y="45" width="12" height="8" rx="1.5" fill="#0F172A" />
-                      <rect x="100" y="45" width="15" height="8" rx="1.5" fill="#4F46E5" />
-                      <rect x="85" y="60" width="28" height="8" rx="1.5" fill="#0F172A" />
-
-                      <rect x="45" y="80" width="25" height="8" rx="1.5" fill="#0F172A" />
-                      <rect x="45" y="95" width="10" height="15" rx="1.5" fill="#4F46E5" />
-                      <rect x="62" y="95" width="18" height="8" rx="1.5" fill="#0F172A" />
-                      <rect x="85" y="85" width="8" height="8" rx="1.5" fill="#0F172A" />
-                      <rect x="100" y="95" width="15" height="15" rx="1.5" fill="#0F172A" />
-                    </svg>
+                  <div className="w-36 h-36 flex items-center justify-center bg-white rounded-lg p-0.5 relative overflow-hidden">
+                    {qrCodeDataUrl ? (
+                      <img
+                        src={qrCodeDataUrl}
+                        alt="Scannable QR Code for LivSync Download"
+                        className="w-full h-full object-contain rounded-md"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50 text-slate-400 text-xs gap-2">
+                        <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                        <span>Generating QR...</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1.5 w-full">
                   <div className="text-xs font-bold text-slate-800 flex items-center justify-center gap-1.5">
-                    <Smartphone className="h-3.5 w-3.5 text-indigo-600" /> Scan with Phone
+                    <Smartphone className="h-3.5 w-3.5 text-indigo-600" /> Real Scannable QR
                   </div>
                   <p className="text-[10px] text-slate-500 leading-tight">
-                    Point camera at QR code to download directly to your mobile
+                    Point your camera at this code to open the download page instantly
                   </p>
+
+                  {/* Copy Link Button */}
+                  <button
+                    onClick={handleCopyLink}
+                    className="w-full mt-2 py-1.5 px-2.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] font-semibold border border-indigo-200/70 inline-flex items-center justify-center gap-1.5 transition-colors active:scale-95"
+                    title="Copy shareable download link"
+                  >
+                    {copiedLink ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="text-emerald-700 font-bold">Copied to Clipboard!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy Share Link</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
             </div>
