@@ -4,6 +4,7 @@ import { App as CapApp } from '@capacitor/app';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Compass, Bookmark, MessageSquare, Users, User, Download, Sparkles } from 'lucide-react';
+import { Logo } from '@/components/ui/Logo';
 import type { Page } from '@/types/navigation';
 
 interface AppLayoutProps {
@@ -71,21 +72,15 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         <header className="hidden md:block sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
           <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
             {/* Logo */}
-            <div
-              className="flex items-center gap-3 cursor-pointer select-none"
-              onClick={() => onPageChange('discover')}
-            >
-              <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-xs">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <span className="text-xl font-bold tracking-tight text-slate-900">
-                  Liv<span className="text-indigo-600">Sync</span>
-                </span>
-                <span className="hidden lg:inline-block ml-2 text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-                  Roommate Discovery
-                </span>
-              </div>
+            <div className="flex items-center gap-2.5">
+              <Logo
+                size="sm"
+                onClick={() => onPageChange('discover')}
+                textClassName="text-xl"
+              />
+              <span className="hidden lg:inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                Roommate Discovery
+              </span>
             </div>
 
             {/* Desktop Navigation Tabs */}

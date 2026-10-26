@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Living Foundation Arch (Person 1 - White) -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 40,64 L 40,51 C 40,43.3 46.3,37 54,37 C 57.5,37 60.7,38.3 63,40.5" />
+
+    <!-- Sync Harmony Arch (Person 2 - Sky Cyan) -->
+    <path
+        android:strokeColor="#38BDF8"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 68,44 L 68,57 C 68,64.7 61.7,71 54,71 C 50.5,71 47.3,69.7 45,67.5" />
+
+    <!-- Central Compatibility Core Outer -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 54,54 m -5,0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0" />
+
+    <!-- Central Compatibility Core Inner -->
+    <path
+        android:fillColor="#0F172A"
+        android:pathData="M 54,54 m -3,0 a 3,3 0 1,0 6,0 a 3,3 0 1,0 -6,0" />
+
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M 54,54 m -1.5,0 a 1.5,1.5 0 1,0 3,0 a 1.5,1.5 0 1,0 -3,0" />
+
+    <!-- Person 1 Anchor Node -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 40,64 m -3,0 a 3,3 0 1,0 6,0 a 3,3 0 1,0 -6,0" />
+
+    <!-- Person 2 Anchor Node -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M 68,44 m -3,0 a 3,3 0 1,0 6,0 a 3,3 0 1,0 -6,0" />
+
+</vector>

@@ -1,35 +1,73 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0a0a1a" />
-      <stop offset="50%" stop-color="#1e1b4b" />
-      <stop offset="100%" stop-color="#312e81" />
+    <!-- Background Gradient -->
+    <linearGradient id="lsBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4338CA" />
+      <stop offset="50%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#7C3AED" />
     </linearGradient>
-    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#5B5BFF" />
-      <stop offset="50%" stop-color="#8B5CF6" />
-      <stop offset="100%" stop-color="#38BDF8" />
+
+    <!-- Accent Sky to Indigo Gradient -->
+    <linearGradient id="lsAccentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#818CF8" />
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="16" result="blur" />
+
+    <!-- Glass Overlay Gradient -->
+    <linearGradient id="lsGlassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.0" />
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="lsGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
-  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
-  <circle cx="256" cy="256" r="180" fill="none" stroke="url(#primaryGrad)" stroke-width="8" opacity="0.3" />
-  
-  <!-- Stylized LivSync Icon / Two connected roommate silhouettes -->
-  <g filter="url(#glow)">
-    <!-- Person 1 -->
-    <circle cx="210" cy="190" r="44" fill="url(#primaryGrad)" />
-    <path d="M140 330 C140 270, 180 250, 210 250 C240 250, 280 270, 280 330 Z" fill="url(#primaryGrad)" />
-    
-    <!-- Person 2 (Overlaying/Syncing) -->
-    <circle cx="305" cy="190" r="44" fill="#818CF8" />
-    <path d="M235 330 C235 270, 275 250, 305 250 C335 250, 375 270, 375 330 Z" fill="#818CF8" opacity="0.9" />
 
-    <!-- Sync Link Pulsing Badge -->
-    <circle cx="256" cy="245" r="24" fill="#0a0a1a" stroke="url(#primaryGrad)" stroke-width="4" />
-    <path d="M246 245 L253 252 L266 239" fill="none" stroke="#38BDF8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Squircle Base with 128px radius -->
+  <rect width="512" height="512" rx="128" fill="url(#lsBgGrad)" />
+  
+  <!-- Top Glass Highlight -->
+  <path d="M 0 128 C 0 57.3 57.3 0 128 0 L 384 0 C 454.7 0 512 57.3 512 128 L 512 240 C 360 200 152 200 0 240 Z" fill="url(#lsGlassGrad)" />
+  
+  <!-- Outer Subtle Rim Border -->
+  <rect x="2" y="2" width="508" height="508" rx="126" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="4" />
+
+  <!-- Harmonized Living & Sync Symbol -->
+  <g>
+    <!-- Ambient Pulse Ring -->
+    <circle cx="256" cy="256" r="148" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-dasharray="24 16" opacity="0.2" />
+    <circle cx="256" cy="256" r="105" fill="none" stroke="url(#lsAccentGrad)" stroke-width="4" opacity="0.3" />
+
+    <!-- Left Living Home Pillar / Arch (Person 1 - Liv) -->
+    <path
+      d="M 160 336 L 160 248 C 160 195 203 152 256 152 C 280 152 302 161 318 176"
+      fill="none"
+      stroke="#FFFFFF"
+      stroke-width="36"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Right Sync Loop Pillar / Arch (Person 2 - Sync) -->
+    <path
+      d="M 352 176 L 352 264 C 352 317 309 360 256 360 C 232 360 210 351 194 336"
+      fill="none"
+      stroke="url(#lsAccentGrad)"
+      stroke-width="36"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Central Compatibility Core / Pulsing Sync Nexus -->
+    <circle cx="256" cy="256" r="32" fill="#0F172A" stroke="#FFFFFF" stroke-width="8" filter="url(#lsGlowFilter)" />
+    <circle cx="256" cy="256" r="16" fill="#38BDF8" />
+    <circle cx="256" cy="256" r="7" fill="#FFFFFF" />
+
+    <!-- Upper & Lower Sync Nodes (Roommates in equilibrium) -->
+    <circle cx="160" cy="336" r="18" fill="#FFFFFF" />
+    <circle cx="352" cy="176" r="18" fill="#38BDF8" />
   </g>
 </svg>

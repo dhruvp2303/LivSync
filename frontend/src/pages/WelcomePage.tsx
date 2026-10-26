@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Home, Users, Sparkles, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { Logo } from '@/components/ui/Logo';
 import type { AuthPage } from '@/types/navigation';
 
 interface Props {
@@ -48,14 +49,7 @@ export function WelcomePage({ onNavigate, onExploreDemo }: Props) {
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between py-6 px-4 sm:px-6 relative overflow-hidden">
       {/* Top Header / Skip */}
       <div className="flex items-center justify-between max-w-md mx-auto w-full pt-2">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-xs">
-            <Sparkles className="w-4 h-4" />
-          </div>
-          <span className="font-bold text-slate-900 tracking-tight text-lg">
-            Liv<span className="text-indigo-600">Sync</span>
-          </span>
-        </div>
+        <Logo size="sm" />
 
         <button
           onClick={() => onNavigate('register')}

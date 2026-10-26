@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, Lock, ChevronLeft, Sparkles, ArrowRight } from 'lucide-react';
+import { Logo } from '@/components/ui/Logo';
 import { Input } from '@/components/ui/Input';
 import { useAuth } from '@/context/AuthContext';
 import type { AuthPage } from '@/types/navigation';
@@ -59,6 +60,7 @@ export function LoginPage({ onNavigate, onSuccess }: Props) {
 
       <div className="flex-1 flex flex-col px-6 pt-4 pb-10 gap-6 max-w-md mx-auto w-full justify-center">
         <div>
+          <Logo size="md" className="mb-4" />
           <h1 className="text-3xl font-black text-slate-900 tracking-tight">Welcome Back</h1>
           <p className="mt-1 text-slate-500 text-sm">Sign in to access your matched roommates and conversations</p>
         </div>

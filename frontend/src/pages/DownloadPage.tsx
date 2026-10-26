@@ -12,6 +12,7 @@ import {
   Check,
   Copy
 } from 'lucide-react';
+import { Logo } from '@/components/ui/Logo';
 
 interface DownloadPageProps {
   onOpenWebApp?: () => void;
@@ -78,20 +79,8 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onOpenWebApp }) => {
       {/* Light Navbar */}
       <header className="border-b border-slate-200/80 bg-white/90 backdrop-blur-md sticky top-0 z-40 shadow-xs">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={onOpenWebApp}>
-            <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-sm shadow-indigo-200">
-              <Users className="w-5 h-5 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-black tracking-tight leading-none text-slate-900">
-                Liv<span className="text-indigo-600">Sync</span>
-              </span>
-              <span className="text-[10px] text-slate-500 font-semibold tracking-wider uppercase mt-1">
-                Roommate Compatibility Network
-              </span>
-            </div>
-          </div>
+          {/* Brand Logo */}
+          <Logo size="md" subtitle={true} onClick={onOpenWebApp} />
 
           {/* Open Web App Action Button */}
           <button
